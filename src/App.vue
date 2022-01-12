@@ -1,28 +1,32 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
-  </div>
+    <div id="app">
+        <img
+            class="w-96 mx-auto mt-12 px-8"
+            alt="Joki Joya"
+            src="https://joki-joya.ru/_nuxt/img/4430b99.png"
+        />
+        <nav id="nav" class="flex justify-center py-8 font-medium">
+            <router-link to="/" class="min-w-[120px] mx-4">
+                Обратная связь
+            </router-link>
+            |
+            <router-link to="/price" class="min-w-[120px] mx-4">
+                Цены
+            </router-link>
+        </nav>
+        <transition name="fade">
+            <router-view />
+        </transition>
+    </div>
 </template>
 
-<script>
-import HelloWorld from "./components/HelloWorld.vue";
+<style lang="scss" scoped>
+#nav a {
+    font-weight: bold;
+    color: #13ace2;
+}
 
-export default {
-  name: "App",
-  components: {
-    HelloWorld,
-  },
-};
-</script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+#nav a.router-link-exact-active {
+    color: #ee3e88;
 }
 </style>
