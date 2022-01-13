@@ -1,5 +1,5 @@
 <template>
-    <main class="flex flex-col items-center text-[color:#758185]">
+    <main class="relative flex flex-col items-center text-[color:#758185]">
         <section
             class="font-marvin gradient-text text-2xl md:text-3xl lg:text-4xl font-bold text-center mt-12"
             :data-title="title"
@@ -45,61 +45,37 @@
             <div class="bg-[color:#FAFBFC] relative pb-12">
                 <div class="w-full max-w-6xl mx-auto pt-16">
                     <div
-                        class="w-full md:w-2/3 flex flex-col items-center z-20"
+                        class="w-full lg:w-2/3 flex flex-col items-center z-20"
                     >
-                        <div class="flex px-4">
-                            <div class="w-1/2 text-center">
-                                <div
-                                    class="h-16 border-b-2 border-r-2 border-[color:#fcc302]"
-                                >
-                                    <h4
-                                        class="text-xl sm:text-xl xl:text-3xl font-bold"
-                                    >
-                                        БУДНИ
-                                    </h4>
-                                </div>
+                        <div class="w-full flex px-4">
+                            <PriceList
+                                :priceData="priceData"
+                                :holidays="false"
+                                :border="{
+                                    title: 'border-b-2 border-r border-[color:#fcc302]',
+                                    body: 'border-r border-[color:#fcc302]',
+                                }"
+                            >
+                                <h4 class="text-xl sm:text-xl xl:text-3xl">
+                                    БУДНИ
+                                </h4>
+                            </PriceList>
 
-                                <div
-                                    class="h-full py-8 px-4 border-r border-[color:#fcc302]"
-                                >
-                                    <span
-                                        v-for="(data, index) in priceData"
-                                        :key="index"
-                                    >
-                                        <PriceItem
-                                            v-if="!data.holidays"
-                                            :data="data"
-                                        ></PriceItem>
-                                    </span>
-                                </div>
-                            </div>
+                            <PriceList
+                                :priceData="priceData"
+                                :holidays="true"
+                                :border="{
+                                    title: 'border-b-2 border-l border-[color:#fcc302]',
+                                    body: 'border-l border-[color:#fcc302]',
+                                }"
+                                priceItemClass="h-full flex-col justify-center"
+                            >
+                                <h4 class="text-xl sm:text-xl xl:text-3xl">
+                                    ВЫХОДНЫЕ
+                                </h4>
 
-                            <div class="w-1/2 text-center">
-                                <div
-                                    class="h-16 text-center font-bold border-b-2 border-[color:#fcc302]"
-                                >
-                                    <h4
-                                        class="text-xl sm:text-xl xl:text-3xl font-bold"
-                                    >
-                                        ВЫХОДНЫЕ
-                                    </h4>
-                                    <h4 class="text-xs">И ПРАЗДНИЧНЫЕ ДНИ</h4>
-                                </div>
-
-                                <div
-                                    class="h-full py-8 px-4 border-l border-[color:#fcc302]"
-                                >
-                                    <span
-                                        v-for="(data, index) in priceData"
-                                        :key="index"
-                                    >
-                                        <PriceItem
-                                            v-if="data.holidays"
-                                            :data="data"
-                                        ></PriceItem>
-                                    </span>
-                                </div>
-                            </div>
+                                <h4 class="text-xs">И ПРАЗДНИЧНЫЕ ДНИ</h4>
+                            </PriceList>
                         </div>
 
                         <button
@@ -111,17 +87,32 @@
                     </div>
 
                     <div
-                        class="hidden md:block md:min-w-[40%] h-3/4 pt-12 absolute bottom-0 right-0"
+                        class="hidden lg:block lg:min-w-[40%] h-[90%] pt-12 absolute bottom-0 right-0"
                     >
                         <img
-                            class="h-full z-10"
+                            class="h-full"
                             src="/images/asset-1.png"
                             alt="Asset"
                         />
+                        <span class="hidden lg:block absolute top-12 right-24">
+                            <img
+                                class="h-full"
+                                src="/images/asset-3.png"
+                                alt="Asset"
+                            />
+                        </span>
                     </div>
                 </div>
             </div>
         </section>
+
+        <span class="hidden lg:block absolute top-72 left-16">
+            <img class="w-full h-full" src="/images/asset-2.png" alt="Asset" />
+        </span>
+
+        <span class="hidden lg:block absolute top-12 right-0">
+            <img class="w-full h-full" src="/images/asset-4.png" alt="Asset" />
+        </span>
     </main>
 </template>
 
@@ -135,13 +126,13 @@ import InfinitySvg from "@/components/common/svg/infinity";
 import HourSvg from "@/components/common/svg/hour";
 import NextSvg from "@/components/common/svg/next";
 
-import PriceItem from "@/components/PriceItem";
+import PriceList from "@/components/PriceList";
 
 export default {
     name: "Price",
 
     components: {
-        PriceItem,
+        PriceList,
     },
 
     async created() {
@@ -160,7 +151,7 @@ export default {
 
         priceData: [
             {
-                name: "Входной билет (на весь день)",
+                name: "Входной билет \n (на весь день)",
                 holidays: false,
                 price: 450,
                 svg: InfinitySvg,
@@ -169,16 +160,16 @@ export default {
                 name: "Билет на 1 час",
                 holidays: false,
                 price: 350,
-                svg: NextSvg,
-            },
-            {
-                name: "Продление (до полного дня)",
-                holidays: false,
-                price: 100,
                 svg: HourSvg,
             },
             {
-                name: "Входной билет (на весь день)",
+                name: "Продление \n (до полного дня)",
+                holidays: false,
+                price: 100,
+                svg: NextSvg,
+            },
+            {
+                name: "Входной билет \n (на весь день)",
                 holidays: true,
                 price: 950,
                 svg: InfinitySvg,
